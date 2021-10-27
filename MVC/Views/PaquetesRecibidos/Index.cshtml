@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MVC.Models.Entities.PaqueteModel>
+
+@{
+    ViewBag.Title = "Paquetes Recibidos";
+}
+
+    <h2>Lista de paquetes recibidos</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaEntrega)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaIngreso)
+        </th>
+        <th>
+            Remitente
+        </th>
+        <th>
+            Acciones
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaEntrega)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaIngreso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remitente.Nombre)
+        </td>
+        <td>
+            @if (item.PuedeCambiarHoraDeEntrega)
+            {
+                <a href="/PaquetesRecibidos/Edit/@item.Id" class="btn btn-primary">Editar hora de entrega</a>
+            }
+        </td>
+    </tr>
+}
+
+</table>

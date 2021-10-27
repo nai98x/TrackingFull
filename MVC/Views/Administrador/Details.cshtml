@@ -1,0 +1,23 @@
+﻿@model MVC.Models.AdministradorModel
+
+@{
+    ViewBag.Title = "Administrador";
+}
+
+<h2>Detalles de administrador</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Volver", "Index")
+</p>

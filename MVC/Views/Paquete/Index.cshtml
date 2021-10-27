@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MVC.Models.Entities.PaqueteModel>
+
+@{
+    ViewBag.Title = "Paquetes";
+}
+
+<h2>Lista de paquetes</h2>
+
+<p>
+    <a href="/Paquete/Create" class="btn btn-success">Nuevo registro</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaEntrega)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaIngreso)
+        </th>
+        <th>
+            Remitente
+        </th>
+        <th>
+            Destinatario
+        </th>
+        <th>
+            Hora de Entrega
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaEntrega)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaIngreso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remitente.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Destinatario.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HoraDeEntrega)
+        </td>
+        <td>
+            <a href="/Paquete/Report/@item.Id" class="btn btn-warning" target="_blank">PDF</a>
+            <a href="/Paquete/Edit/@item.Id" class="btn btn-primary">Editar</a>
+            <a href="/Paquete/Delete/@item.Id" class="btn btn-danger">Eliminar</a>
+        </td>
+    </tr>
+}
+
+</table>

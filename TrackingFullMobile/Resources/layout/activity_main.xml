@@ -1,0 +1,36 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_trackingfull">
+    <EditText
+        android:layout_width="258.0dp"
+        android:layout_height="45.5dp"
+        android:id="@+id/editPass"
+        android:layout_marginTop="163.0dp"
+        android:layout_marginLeft="32.5dp"
+        android:background="#FFFFFF"
+        android:inputType="none|textPassword"
+        android:hint="Contraseña"
+        android:textColor="#ff000000" />
+    <EditText
+        android:layout_width="260.0dp"
+        android:layout_height="46.5dp"
+        android:background="#FFFFFF"
+        android:id="@+id/editUser"
+        android:layout_marginTop="99.5dp"
+        android:layout_marginLeft="32.5dp"
+        android:hint="Email"
+        android:textColor="#ff000000" />
+    <Button
+        android:text="Iniciar Sesión"
+        android:layout_width="242.5dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLogin"
+        android:layout_marginTop="227.5dp"
+        android:layout_marginLeft="39.5dp"
+        android:textColor="#ffffffff"
+        android:background="#ff3190a8" />
+</RelativeLayout>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MVC.Models.Entities.SistemaExternoModel>
+
+@{
+    ViewBag.Title = "Sistemas externos";
+}
+
+<h2>Lista de usuarios de sistemas externos</h2>
+
+<p>
+    <a href="/SistemaExterno/Create" class="btn btn-success">Nuevo registro</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            <a href="/SistemaExterno/Edit/@item.Id" class="btn btn-primary">Editar</a>
+            <a href="/SistemaExterno/Delete/@item.Id" class="btn btn-danger">Eliminar</a>
+        </td>
+    </tr>
+}
+
+</table>

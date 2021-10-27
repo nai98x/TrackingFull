@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MVC.Models.Entities.PuntoDeControlModel>
+
+@{
+    ViewBag.Title = "Puntos de control";
+}
+
+<h2>Lista de puntos de control</h2>
+
+<p>
+    <a href="/PuntoDeControl/Create" class="btn btn-success">Nuevo registro</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Posicion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            Agencia
+        </th>
+        <th>
+            Acción
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Posicion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Agencia.Nombre)
+        </td>
+        <td>
+            <a href="/PuntoDeControl/Edit/@item.Id" class="btn btn-primary">Editar</a>
+            <a href="/PuntoDeControl/Delete/@item.Id" class="btn btn-danger">Eliminar</a>
+        </td>
+    </tr>
+}
+
+</table>
+
+<p>
+    <a href="/Trayecto" class="btn btn-warning">Volver</a>
+</p>

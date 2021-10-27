@@ -1,0 +1,25 @@
+﻿@model MVC.Models.Entities.TrayectoModel
+
+@{
+    ViewBag.Title = "Trayecto";
+}
+
+<h2>Detalles de trayecto</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Volver", "Index")
+</p>

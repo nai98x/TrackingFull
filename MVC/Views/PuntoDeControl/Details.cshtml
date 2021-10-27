@@ -1,0 +1,32 @@
+﻿@model MVC.Models.Entities.PuntoDeControlModel
+
+@{
+    ViewBag.Title = "Punto de Control";
+}
+
+<h2>Detalles de punto de control</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Posicion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Posicion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Volver", "Index", "PuntoDeControl", new { id = ViewBag.IdTrayecto }, null)
+</p>

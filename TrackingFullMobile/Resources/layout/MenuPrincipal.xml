@@ -1,0 +1,44 @@
+﻿<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_trackingfull">
+    <Button
+        android:text="Procesar Paquete"
+        android:layout_width="317.0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonProcesarPaquete"
+        android:layout_marginTop="120.5dp"
+        android:layout_marginLeft="29.5dp"
+        android:textColor="#ffffffff"
+        android:background="#ff3190a8" />
+    <Button
+        android:text="Anular procesamiento de Paquete"
+        android:layout_width="317.0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonAnularProcesamientoDePaquete"
+        android:layout_marginTop="217.5dp"
+        android:layout_marginLeft="29.5dp"
+        android:textColor="#ffffffff"
+        android:background="#ff3190a8" />
+    <Button
+        android:text="Finalizar entrega de Paquete"
+        android:layout_width="317.0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonFinalizarEntregaDePaquete"
+        android:layout_marginTop="310.0dp"
+        android:layout_marginLeft="29.5dp"
+        android:textColor="#ffffffff"
+        android:background="#ff3190a8" />
+    <Button
+        android:text="Cerrar Sesión"
+        android:layout_width="228.0dp"
+        android:layout_height="46.5dp"
+        android:id="@+id/buttonCerrarSesion"
+        android:layout_marginTop="397.0dp"
+        android:layout_marginLeft="73.5dp"
+        android:textColor="#ffffffff"
+        android:background="#ff3190a8"/>
+</RelativeLayout>

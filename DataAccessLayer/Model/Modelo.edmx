@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="Agencias" EntityType="Model.Store.Agencias" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Paquetes" EntityType="Model.Store.Paquetes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Trayectos" EntityType="Model.Store.Trayectos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Usuarios" EntityType="Model.Store.Usuarios" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PuntosDeControl" EntityType="Model.Store.PuntosDeControl" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="PaqueteTrayecto" Association="Model.Store.PaqueteTrayecto">
+      <End Role="Paquete" EntitySet="Paquetes" />
+      <End Role="Trayecto" EntitySet="Trayectos" />
+    </AssociationSet>
+    <AssociationSet Name="PuntoDeControlAgencia" Association="Model.Store.PuntoDeControlAgencia">
+      <End Role="PuntoDeControl" EntitySet="PuntosDeControl" />
+      <End Role="Agencia" EntitySet="Agencias" />
+    </AssociationSet>
+    <AssociationSet Name="TrayectoPuntoDeControl" Association="Model.Store.TrayectoPuntoDeControl">
+      <End Role="Trayecto" EntitySet="Trayectos" />
+      <End Role="PuntoDeControl" EntitySet="PuntosDeControl" />
+    </AssociationSet>
+    <AssociationSet Name="AgenciaTrayecto" Association="Model.Store.AgenciaTrayecto">
+      <End Role="Agencia" EntitySet="Agencias" />
+      <End Role="Trayecto" EntitySet="Trayectos" />
+    </AssociationSet>
+    <AssociationSet Name="AgenciaTrayecto1" Association="Model.Store.AgenciaTrayecto1">
+      <End Role="Agencia" EntitySet="Agencias" />
+      <End Role="Trayecto" EntitySet="Trayectos" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioPaquete" Association="Model.Store.UsuarioPaquete">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Paquete" EntitySet="Paquetes" />
+    </AssociationSet>
+    <AssociationSet Name="UsuarioPaquete1" Association="Model.Store.UsuarioPaquete1">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Paquete" EntitySet="Paquetes" />
+    </AssociationSet>
+    <AssociationSet Name="PaquetePuntoDeControl" Association="Model.Store.PaquetePuntoDeControl">
+      <End Role="Paquete" EntitySet="Paquetes" />
+      <End Role="PuntoDeControl" EntitySet="PuntosDeControl" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Agencias">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" Nullable="true" MaxLength="30" />
+    <Property Name="Direccion" Type="varchar" Nullable="true" MaxLength="155" />
+    <Property Name="EntregaDomicilio" Type="bit" Nullable="false" />
+    <Property Name="CodigoExterno" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Borrado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Paquetes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" Nullable="false" MaxLength="155" />
+    <Property Name="FechaEntrega" Type="datetime" Nullable="true" />
+    <Property Name="Codigo" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="CodigoExterno" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="FechaIngreso" Type="datetime" Nullable="false" />
+    <Property Name="Entregado" Type="bit" Nullable="true" />
+    <Property Name="HoraDeEntrega" Type="int" Nullable="true" />
+    <Property Name="TrayectoId" Type="int" Nullable="false" />
+    <Property Name="RemitenteId" Type="int" Nullable="false" />
+    <Property Name="DestinatarioId" Type="int" Nullable="false" />
+    <Property Name="PuntoDeControlId" Type="int" Nullable="false" />
+    <Property Name="Borrado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Trayectos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="idAgenciaOrigen" Type="int" Nullable="false" />
+    <Property Name="idAgenciaDestino" Type="int" Nullable="false" />
+    <Property Name="CodigoExterno" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Borrado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Pass" Type="varchar" Nullable="false" MaxLength="30" />
+    <Property Name="Rol" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Direccion" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Telefono" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TipoDocumento" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="NroDocumento" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="CodigoExterno" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Borrado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PuntosDeControl">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Posicion" Type="int" Nullable="false" />
+    <Property Name="TiempoEstimado" Type="int" Nullable="false" />
+    <Property Name="IdAgencia" Type="int" Nullable="true" />
+    <Property Name="IdTrayecto" Type="int" Nullable="false" />
+    <Property Name="CodigoExterno" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Borrado" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="PaqueteTrayecto">
+    <End Role="Paquete" Type="Model.Store.Paquetes" Multiplicity="*" />
+    <End Role="Trayecto" Type="Model.Store.Trayectos" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Trayecto">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Paquete">
+        <PropertyRef Name="TrayectoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PuntoDeControlAgencia">
+    <End Role="PuntoDeControl" Type="Model.Store.PuntosDeControl" Multiplicity="*" />
+    <End Role="Agencia" Type="Model.Store.Agencias" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Agencia">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PuntoDeControl">
+        <PropertyRef Name="IdAgencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TrayectoPuntoDeControl">
+    <End Role="Trayecto" Type="Model.Store.Trayectos" Multiplicity="1" />
+    <End Role="PuntoDeControl" Type="Model.Store.PuntosDeControl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trayecto">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PuntoDeControl">
+        <PropertyRef Name="IdTrayecto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AgenciaTrayecto">
+    <End Role="Agencia" Type="Model.Store.Agencias" Multiplicity="1" />
+    <End Role="Trayecto" Type="Model.Store.Trayectos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agencia">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trayecto">
+        <PropertyRef Name="idAgenciaOrigen" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AgenciaTrayecto1">
+    <End Role="Agencia" Type="Model.Store.Agencias" Multiplicity="1" />
+    <End Role="Trayecto" Type="Model.Store.Trayectos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agencia">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trayecto">
+        <PropertyRef Name="idAgenciaDestino" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioPaquete">
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <End Role="Paquete" Type="Model.Store.Paquetes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Paquete">
+        <PropertyRef Name="RemitenteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsuarioPaquete1">
+    <End Role="Usuario" Type="Model.Store.Usuarios" Multiplicity="1" />
+    <End Role="Paquete" Type="Model.Store.Paquetes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Paquete">
+        <PropertyRef Name="DestinatarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PaquetePuntoDeControl">
+    <End Role="Paquete" Type="Model.Store.Paquetes" Multiplicity="*" />
+    <End Role="PuntoDeControl" Type="Model.Store.PuntosDeControl" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="PuntoDeControl">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Paquete">
+        <PropertyRef Name="PuntoDeControlId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Agencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="155" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PuntoDeControl" Relationship="Model.PuntoDeControlAgencia" FromRole="Agencia" ToRole="PuntoDeControl" />
+          <Property Name="EntregaDomicilio" Type="Boolean" Nullable="false" />
+          <Property Name="CodigoExterno" Type="String" Nullable="true" />
+          <Property Name="Borrado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Paquete">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="155" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaEntrega" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="Trayecto" Relationship="Model.PaqueteTrayecto" FromRole="Paquete" ToRole="Trayecto" />
+          <Property Name="Codigo" Type="String" Nullable="true" />
+          <Property Name="CodigoExterno" Type="String" Nullable="true" />
+          <Property Name="FechaIngreso" Type="DateTime" Nullable="false" />
+          <Property Name="Entregado" Type="Boolean" Nullable="true" />
+          <Property Name="HoraDeEntrega" Type="Int32" Nullable="true" />
+          <Property Name="TrayectoId" Type="Int32" Nullable="false" />
+          <Property Name="RemitenteId" Type="Int32" Nullable="false" />
+          <Property Name="DestinatarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Remitente" Relationship="Model.UsuarioPaquete" FromRole="Paquete" ToRole="Usuario" />
+          <NavigationProperty Name="Destinatario" Relationship="Model.UsuarioPaquete1" FromRole="Paquete" ToRole="Usuario" />
+          <Property Name="PuntoDeControlId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PDC_Actual" Relationship="Model.PaquetePuntoDeControl" FromRole="Paquete" ToRole="PuntoDeControl" />
+          <Property Name="Borrado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trayecto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" />
+          <NavigationProperty Name="Paquetes" Relationship="Model.PaqueteTrayecto" FromRole="Trayecto" ToRole="Paquete" />
+          <NavigationProperty Name="PuntoDeControl" Relationship="Model.TrayectoPuntoDeControl" FromRole="Trayecto" ToRole="PuntoDeControl" />
+          <Property Name="idAgenciaOrigen" Type="Int32" Nullable="false" />
+          <Property Name="idAgenciaDestino" Type="Int32" Nullable="false" />
+          <Property Name="CodigoExterno" Type="String" Nullable="true" />
+          <NavigationProperty Name="Origen" Relationship="Model.AgenciaTrayecto" FromRole="Trayecto" ToRole="Agencia" />
+          <NavigationProperty Name="Destino" Relationship="Model.AgenciaTrayecto1" FromRole="Trayecto" ToRole="Agencia" />
+          <Property Name="Borrado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario" Abstract="false">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pass" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rol" Type="String" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="true" />
+          <Property Name="Direccion" Type="String" Nullable="true" />
+          <Property Name="Telefono" Type="String" Nullable="true" />
+          <Property Name="TipoDocumento" Type="String" Nullable="true" />
+          <Property Name="NroDocumento" Type="String" Nullable="true" />
+          <Property Name="CodigoExterno" Type="String" Nullable="true" />
+          <NavigationProperty Name="PaquetesEnviados" Relationship="Model.UsuarioPaquete" FromRole="Usuario" ToRole="Paquete" />
+          <NavigationProperty Name="PaquetesRecibidos" Relationship="Model.UsuarioPaquete1" FromRole="Usuario" ToRole="Paquete" />
+          <Property Name="Borrado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="TFEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Agencias" EntityType="Self.Agencia" />
+          <EntitySet Name="Paquetes" EntityType="Self.Paquete" />
+          <EntitySet Name="Trayectos" EntityType="Self.Trayecto" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="PaqueteTrayecto" Association="Model.PaqueteTrayecto">
+            <End Role="Paquete" EntitySet="Paquetes" />
+            <End Role="Trayecto" EntitySet="Trayectos" />
+          </AssociationSet>
+          <EntitySet Name="PuntosDeControl" EntityType="Model.PuntoDeControl" />
+          <AssociationSet Name="PuntoDeControlAgencia" Association="Model.PuntoDeControlAgencia">
+            <End Role="PuntoDeControl" EntitySet="PuntosDeControl" />
+            <End Role="Agencia" EntitySet="Agencias" />
+          </AssociationSet>
+          <AssociationSet Name="TrayectoPuntoDeControl" Association="Model.TrayectoPuntoDeControl">
+            <End Role="Trayecto" EntitySet="Trayectos" />
+            <End Role="PuntoDeControl" EntitySet="PuntosDeControl" />
+          </AssociationSet>
+          <AssociationSet Name="AgenciaTrayecto" Association="Model.AgenciaTrayecto">
+            <End Role="Agencia" EntitySet="Agencias" />
+            <End Role="Trayecto" EntitySet="Trayectos" />
+          </AssociationSet>
+          <AssociationSet Name="AgenciaTrayecto1" Association="Model.AgenciaTrayecto1">
+            <End Role="Agencia" EntitySet="Agencias" />
+            <End Role="Trayecto" EntitySet="Trayectos" />
+          </AssociationSet>
+          <AssociationSet Name="UsuarioPaquete" Association="Model.UsuarioPaquete">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Paquete" EntitySet="Paquetes" />
+          </AssociationSet>
+          <AssociationSet Name="UsuarioPaquete1" Association="Model.UsuarioPaquete1">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Paquete" EntitySet="Paquetes" />
+          </AssociationSet>
+          <AssociationSet Name="PaquetePuntoDeControl" Association="Model.PaquetePuntoDeControl">
+            <End Role="Paquete" EntitySet="Paquetes" />
+            <End Role="PuntoDeControl" EntitySet="PuntosDeControl" />
+          </AssociationSet>
+          </EntityContainer>
+        <EnumType Name="Estado">
+          <Member Name="RecibidoEnOrigen" Value="1" />
+          <Member Name="EsperandoEnOrigen" Value="2" />
+          <Member Name="EnViaje" Value="3" />
+          <Member Name="RecibidoEnDestino" Value="4" />
+          <Member Name="EntregadoAlCliente" Value="5" />
+        </EnumType>
+        <Association Name="PaqueteTrayecto">
+          <End Type="Model.Paquete" Role="Paquete" Multiplicity="*" />
+          <End Type="Model.Trayecto" Role="Trayecto" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Trayecto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paquete">
+              <PropertyRef Name="TrayectoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PuntoDeControl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Agencia" Relationship="Model.PuntoDeControlAgencia" FromRole="PuntoDeControl" ToRole="Agencia" />
+          <Property Name="Nombre" Type="String" Nullable="false" />
+          <Property Name="Posicion" Type="Int32" Nullable="false" />
+          <Property Name="TiempoEstimado" Type="Int32" Nullable="false" />
+          <Property Name="IdAgencia" Type="Int32" Nullable="true" />
+          <Property Name="IdTrayecto" Type="Int32" Nullable="false" />
+          <Property Name="CodigoExterno" Type="String" Nullable="true" />
+          <NavigationProperty Name="Trayecto" Relationship="Model.TrayectoPuntoDeControl" FromRole="PuntoDeControl" ToRole="Trayecto" />
+          <NavigationProperty Name="Paquetes" Relationship="Model.PaquetePuntoDeControl" FromRole="PuntoDeControl" ToRole="Paquete" />
+          <Property Name="Borrado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="PuntoDeControlAgencia">
+          <End Type="Model.PuntoDeControl" Role="PuntoDeControl" Multiplicity="*" />
+          <End Type="Model.Agencia" Role="Agencia" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Agencia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PuntoDeControl">
+              <PropertyRef Name="IdAgencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TrayectoPuntoDeControl">
+          <End Type="Model.Trayecto" Role="Trayecto" Multiplicity="1" />
+          <End Type="Model.PuntoDeControl" Role="PuntoDeControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trayecto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PuntoDeControl">
+              <PropertyRef Name="IdTrayecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AgenciaTrayecto">
+          <End Type="Model.Agencia" Role="Agencia" Multiplicity="1" />
+          <End Type="Model.Trayecto" Role="Trayecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trayecto">
+              <PropertyRef Name="idAgenciaOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AgenciaTrayecto1">
+          <End Type="Model.Agencia" Role="Agencia" Multiplicity="1" />
+          <End Type="Model.Trayecto" Role="Trayecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trayecto">
+              <PropertyRef Name="idAgenciaDestino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsuarioPaquete">
+          <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Model.Paquete" Role="Paquete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paquete">
+              <PropertyRef Name="RemitenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsuarioPaquete1">
+          <End Type="Model.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Model.Paquete" Role="Paquete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paquete">
+              <PropertyRef Name="DestinatarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PaquetePuntoDeControl">
+          <End Type="Model.Paquete" Role="Paquete" Multiplicity="*" />
+          <End Type="Model.PuntoDeControl" Role="PuntoDeControl" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="PuntoDeControl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paquete">
+              <PropertyRef Name="PuntoDeControlId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="TFEntities">
+    <EntitySetMapping Name="Agencias">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Agencia)">
+        <MappingFragment StoreEntitySet="Agencias">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="EntregaDomicilio" ColumnName="EntregaDomicilio" />
+          <ScalarProperty Name="CodigoExterno" ColumnName="CodigoExterno" />
+          <ScalarProperty Name="Borrado" ColumnName="Borrado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Paquetes">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Paquete)">
+        <MappingFragment StoreEntitySet="Paquetes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+          <ScalarProperty Name="CodigoExterno" ColumnName="CodigoExterno" />
+          <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+          <ScalarProperty Name="Entregado" ColumnName="Entregado" />
+          <ScalarProperty Name="HoraDeEntrega" ColumnName="HoraDeEntrega" />
+          <ScalarProperty Name="TrayectoId" ColumnName="TrayectoId" />
+          <ScalarProperty Name="RemitenteId" ColumnName="RemitenteId" />
+          <ScalarProperty Name="DestinatarioId" ColumnName="DestinatarioId" />
+          <ScalarProperty Name="PuntoDeControlId" ColumnName="PuntoDeControlId" />
+          <ScalarProperty Name="Borrado" ColumnName="Borrado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trayectos">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Trayecto)">
+        <MappingFragment StoreEntitySet="Trayectos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="idAgenciaOrigen" ColumnName="idAgenciaOrigen" />
+          <ScalarProperty Name="idAgenciaDestino" ColumnName="idAgenciaDestino" />
+          <ScalarProperty Name="CodigoExterno" ColumnName="CodigoExterno" />
+          <ScalarProperty Name="Borrado" ColumnName="Borrado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Usuario)">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Pass" ColumnName="Pass" />
+          <ScalarProperty Name="Rol" ColumnName="Rol" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+          <ScalarProperty Name="NroDocumento" ColumnName="NroDocumento" />
+          <ScalarProperty Name="CodigoExterno" ColumnName="CodigoExterno" />
+          <ScalarProperty Name="Borrado" ColumnName="Borrado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PuntosDeControl">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.PuntoDeControl)">
+        <MappingFragment StoreEntitySet="PuntosDeControl">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Posicion" ColumnName="Posicion" />
+          <ScalarProperty Name="TiempoEstimado" ColumnName="TiempoEstimado" />
+          <ScalarProperty Name="IdAgencia" ColumnName="IdAgencia" />
+          <ScalarProperty Name="IdTrayecto" ColumnName="IdTrayecto" />
+          <ScalarProperty Name="CodigoExterno" ColumnName="CodigoExterno" />
+          <ScalarProperty Name="Borrado" ColumnName="Borrado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

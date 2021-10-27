@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - TrackingFULL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top sidebar-navbar-inverse">
+        <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+            <img src="~/Img/logo.png" />
+        </a>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (!User.Identity.IsAuthenticated || User.IsInRole("Cliente"))
+                    {
+                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-layout">
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="sidebar-aside-content">
+                <!-- Content of sidebar -->
+                <ul class="sidebar-nav">
+                    @if (User.IsInRole("Superadministrador"))
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Administrador")">
+                                <i class="zmdi zmdi-accounts"></i> Administradores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "SistemaExterno")">
+                                <i class="zmdi zmdi-rss"></i> Sistemas Externos
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Administrador")">
+                                <i class="zmdi zmdi-accounts"></i> Administradores
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Funcionario")">
+                                <i class="zmdi zmdi-accounts"></i> Funcionarios
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Agencia")">
+                                <i class="zmdi zmdi-home"></i> Agencias
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Trayecto")">
+                                <i class="zmdi zmdi-navigation"></i> Trayectos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "PermisosDeUsuarios")">
+                                <i class="zmdi zmdi-shield-security"></i> Permisos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "ReportesGraficos")">
+                                <i class="zmdi zmdi-chart"></i> Reportes Gráficos
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Funcionario"))
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Cliente")">
+                                <i class="zmdi zmdi-accounts"></i> Clientes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Paquete")">
+                                <i class="zmdi zmdi-mall"></i> Paquetes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "ReportePaquetes")">
+                                <i class="zmdi zmdi-search"></i> Filtro paquetes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "ReportesGraficos")">
+                                <i class="zmdi zmdi-chart"></i> Reportes Gráficos
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "PaquetesEnviados")">
+                                <i class="zmdi zmdi-mail-send"></i> Paquetes Enviados
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "PaquetesRecibidos")">
+                                <i class="zmdi zmdi-mail-reply"></i> Paquetes Recibidos
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <div class="container body-content sidebar-body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - TrackingFULL</p>
+            </footer>
+        </div>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

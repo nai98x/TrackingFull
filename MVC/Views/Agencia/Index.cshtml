@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MVC.Models.Entities.AgenciaModel>
+
+@{
+    ViewBag.Title = "Agencias";
+}
+
+<h2>Lista de agencias</h2>
+
+<p>
+    <a href="/Agencia/Create" class="btn btn-success">Nuevo registro</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EntregaDomicilio)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EntregaDomicilio)
+        </td>
+        <td>
+            <a href="/Agencia/Edit/@item.Id" class="btn btn-primary">Editar</a>
+            <a href="/Agencia/Delete/@item.Id" class="btn btn-danger">Eliminar</a>
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,39 @@
+﻿@model Shared.Entities.Paquete
+@{
+    Layout = null;
+}
+
+    <div>
+        <h1>Paquete</h1>
+        <h2>Datos generales</h2>
+        <ul>
+            <li>Nombre: @Model.Descripcion</li>
+            <li>Estado: @ViewBag.Estado</li>
+            <li>Origen: @ViewBag.Origen</li>
+            <li>Destino: @ViewBag.Destino</li>
+        </ul>
+        <h2>Remitente</h2>
+        <ul>
+            <li>Email: @Model.Remitente.Email</li>
+            <li>Nombre: @Model.Remitente.Nombre</li>
+            <li>Dirección: @Model.Remitente.Direccion</li>
+            <li>Teléfono: @Model.Remitente.Telefono</li>
+            <li>Tipo de Documento: @Model.Remitente.TipoDocumento</li>
+            <li>Nro de Documento: @Model.Remitente.NroDocumento</li>
+        </ul>
+        <h2>Destinatario</h2>
+        <ul>
+            <li>Email: @Model.Destinatario.Email</li>
+            <li>Nombre: @Model.Destinatario.Nombre</li>
+            <li>Dirección: @Model.Destinatario.Direccion</li>
+            <li>Teléfono: @Model.Destinatario.Telefono</li>
+        </ul>
+        @if (ViewBag.imageBytes != null)
+        {
+            <center>
+                <h2>Código QR</h2>
+                <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.imageBytes))" />
+            </center>
+        }
+    </div> 
+

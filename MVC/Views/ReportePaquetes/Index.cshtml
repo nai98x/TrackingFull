@@ -1,0 +1,62 @@
+﻿@model MVC.Models.ReportePaquetesModel
+
+@{
+    ViewBag.Title = "Buscar paquetes";
+}
+
+<h2>Filtros para buscar paquetes</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaDesde, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FechaDesde, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FechaDesde, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaHasta, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FechaHasta, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FechaHasta, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.DropDownListFor(x => x.Estado, new SelectList(ViewBag.Estados), htmlAttributes: new { @class = "form-control", id = "Id" })
+                @Html.ValidationMessageFor(x => x.Estado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Remitente, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.DropDownListFor(x => x.Remitente, new SelectList(ViewBag.Remitentes, "Id", "Nombre"), htmlAttributes: new { @class = "form-control", id = "Id" })
+                @Html.ValidationMessageFor(x => x.Remitente, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Destinatario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5">
+                @Html.DropDownListFor(x => x.Destinatario, new SelectList(ViewBag.Destinatarios, "Id", "Nombre"), htmlAttributes: new { @class = "form-control", id = "Id" })
+                @Html.ValidationMessageFor(x => x.Destinatario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Aplicar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

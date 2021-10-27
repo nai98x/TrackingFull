@@ -1,0 +1,49 @@
+﻿@model IEnumerable<MVC.Models.Entities.TrayectoModel>
+
+@{
+    ViewBag.Title = "Trayectos";
+}
+
+<h2>Lista de trayectos</h2>
+
+<p>
+    <a href="/Trayecto/Create" class="btn btn-success">Nuevo registro</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            Agencia Origen
+        </th>
+        <th>
+            Agencia Destino
+        </th>
+        <th>
+            Acción
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Origen.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Destino.Nombre)
+        </td>
+
+        <td>
+            <a href="/Trayecto/Edit/@item.Id" class="btn btn-primary">Editar</a>
+            <a href="/Trayecto/Delete/@item.Id" class="btn btn-danger">Eliminar</a>
+            <a href="/PuntoDeControl/Index/@item.Id" class="btn btn-warning">Puntos de Control</a>
+        </td>
+    </tr>
+}
+
+</table>

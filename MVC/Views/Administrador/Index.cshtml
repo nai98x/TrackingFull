@@ -1,0 +1,35 @@
+﻿@model IEnumerable<MVC.Models.AdministradorModel>
+
+@{
+    ViewBag.Title = "Administradores";
+}
+
+<h2>Lista de administradores</h2>
+
+<p>
+    <a href="/Administrador/Create" class="btn btn-success">Nuevo registro</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            Accion
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            <a href="/Administrador/Edit/@item.Id" class="btn btn-primary">Editar</a>
+            <a href="/Administrador/Delete/@item.Id" class="btn btn-danger">Eliminar</a>
+        </td>
+    </tr>
+}
+
+</table>

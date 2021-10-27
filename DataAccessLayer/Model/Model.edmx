@@ -1,0 +1,563 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Agencias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" />
+          <Property Name="Direccion" Type="varchar" MaxLength="155" />
+          <Property Name="EntregaDomicilio" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaquetePuntoDeControlSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FechaLlegada" Type="datetime" Nullable="false" />
+          <Property Name="IdPaquete" Type="int" Nullable="false" />
+          <Property Name="IdPuntoDeControl" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Paquetes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="155" Nullable="false" />
+          <Property Name="FechaEntrega" Type="datetime" />
+          <Property Name="Codigo" Type="nvarchar(max)" />
+          <Property Name="FechaIngreso" Type="datetime" Nullable="false" />
+          <Property Name="TrayectoId" Type="int" Nullable="false" />
+          <Property Name="RemitenteId" Type="int" Nullable="false" />
+          <Property Name="DestinatarioId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PuntosDeControl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Posicion" Type="int" Nullable="false" />
+          <Property Name="TiempoEstimado" Type="int" Nullable="false" />
+          <Property Name="IdAgencia" Type="int" />
+          <Property Name="IdTrayecto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trayectos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="idAgenciaOrigen" Type="int" Nullable="false" />
+          <Property Name="idAgenciaDestino" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pass" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Rol" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="Direccion" Type="nvarchar(max)" />
+          <Property Name="Telefono" Type="nvarchar(max)" />
+          <Property Name="TipoDocumento" Type="nvarchar(max)" />
+          <Property Name="NroDocumento" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_AgenciaTrayecto">
+          <End Role="Agencias" Type="Self.Agencias" Multiplicity="1" />
+          <End Role="Trayectos" Type="Self.Trayectos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trayectos">
+              <PropertyRef Name="idAgenciaOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AgenciaTrayecto1">
+          <End Role="Agencias" Type="Self.Agencias" Multiplicity="1" />
+          <End Role="Trayectos" Type="Self.Trayectos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trayectos">
+              <PropertyRef Name="idAgenciaDestino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaquetePaquetePuntoDeControl">
+          <End Role="Paquetes" Type="Self.Paquetes" Multiplicity="1" />
+          <End Role="PaquetePuntoDeControlSet" Type="Self.PaquetePuntoDeControlSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paquetes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaquetePuntoDeControlSet">
+              <PropertyRef Name="IdPaquete" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaqueteTrayecto">
+          <End Role="Trayectos" Type="Self.Trayectos" Multiplicity="1" />
+          <End Role="Paquetes" Type="Self.Paquetes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trayectos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paquetes">
+              <PropertyRef Name="TrayectoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PuntoDeControlAgencia">
+          <End Role="Agencias" Type="Self.Agencias" Multiplicity="0..1" />
+          <End Role="PuntosDeControl" Type="Self.PuntosDeControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PuntosDeControl">
+              <PropertyRef Name="IdAgencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PuntoDeControlPaquetePuntoDeControl">
+          <End Role="PuntosDeControl" Type="Self.PuntosDeControl" Multiplicity="1" />
+          <End Role="PaquetePuntoDeControlSet" Type="Self.PaquetePuntoDeControlSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuntosDeControl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaquetePuntoDeControlSet">
+              <PropertyRef Name="IdPuntoDeControl" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrayectoPuntoDeControl">
+          <End Role="Trayectos" Type="Self.Trayectos" Multiplicity="1" />
+          <End Role="PuntosDeControl" Type="Self.PuntosDeControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trayectos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PuntosDeControl">
+              <PropertyRef Name="IdTrayecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioPaquete">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Paquetes" Type="Self.Paquetes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paquetes">
+              <PropertyRef Name="RemitenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioPaquete1">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Paquetes" Type="Self.Paquetes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paquetes">
+              <PropertyRef Name="DestinatarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Agencias" EntityType="Self.Agencias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaquetePuntoDeControlSet" EntityType="Self.PaquetePuntoDeControlSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paquetes" EntityType="Self.Paquetes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PuntosDeControl" EntityType="Self.PuntosDeControl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trayectos" EntityType="Self.Trayectos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AgenciaTrayecto" Association="Self.FK_AgenciaTrayecto">
+            <End Role="Agencias" EntitySet="Agencias" />
+            <End Role="Trayectos" EntitySet="Trayectos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AgenciaTrayecto1" Association="Self.FK_AgenciaTrayecto1">
+            <End Role="Agencias" EntitySet="Agencias" />
+            <End Role="Trayectos" EntitySet="Trayectos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaquetePaquetePuntoDeControl" Association="Self.FK_PaquetePaquetePuntoDeControl">
+            <End Role="Paquetes" EntitySet="Paquetes" />
+            <End Role="PaquetePuntoDeControlSet" EntitySet="PaquetePuntoDeControlSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaqueteTrayecto" Association="Self.FK_PaqueteTrayecto">
+            <End Role="Trayectos" EntitySet="Trayectos" />
+            <End Role="Paquetes" EntitySet="Paquetes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PuntoDeControlAgencia" Association="Self.FK_PuntoDeControlAgencia">
+            <End Role="Agencias" EntitySet="Agencias" />
+            <End Role="PuntosDeControl" EntitySet="PuntosDeControl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PuntoDeControlPaquetePuntoDeControl" Association="Self.FK_PuntoDeControlPaquetePuntoDeControl">
+            <End Role="PuntosDeControl" EntitySet="PuntosDeControl" />
+            <End Role="PaquetePuntoDeControlSet" EntitySet="PaquetePuntoDeControlSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrayectoPuntoDeControl" Association="Self.FK_TrayectoPuntoDeControl">
+            <End Role="Trayectos" EntitySet="Trayectos" />
+            <End Role="PuntosDeControl" EntitySet="PuntosDeControl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioPaquete" Association="Self.FK_UsuarioPaquete">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Paquetes" EntitySet="Paquetes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioPaquete1" Association="Self.FK_UsuarioPaquete1">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Paquetes" EntitySet="Paquetes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Agencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="155" FixedLength="false" Unicode="false" />
+          <Property Name="EntregaDomicilio" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PuntosDeControl" Relationship="Self.FK_PuntoDeControlAgencia" FromRole="Agencias" ToRole="PuntosDeControl" />
+        </EntityType>
+        <EntityType Name="PaquetePuntoDeControl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaLlegada" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdPaquete" Type="Int32" Nullable="false" />
+          <Property Name="IdPuntoDeControl" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Paquete" Relationship="Self.FK_PaquetePaquetePuntoDeControl" FromRole="PaquetePuntoDeControlSet" ToRole="Paquetes" />
+          <NavigationProperty Name="PuntoDeControl" Relationship="Self.FK_PuntoDeControlPaquetePuntoDeControl" FromRole="PaquetePuntoDeControlSet" ToRole="PuntosDeControl" />
+        </EntityType>
+        <EntityType Name="Paquete">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="155" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaEntrega" Type="DateTime" Precision="3" />
+          <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FechaIngreso" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TrayectoId" Type="Int32" Nullable="false" />
+          <Property Name="RemitenteId" Type="Int32" Nullable="false" />
+          <Property Name="DestinatarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PaquetePuntoDeControlSet" Relationship="Self.FK_PaquetePaquetePuntoDeControl" FromRole="Paquetes" ToRole="PaquetePuntoDeControlSet" />
+          <NavigationProperty Name="Trayectos" Relationship="Self.FK_PaqueteTrayecto" FromRole="Paquetes" ToRole="Trayectos" />
+          <NavigationProperty Name="Remitente" Relationship="Self.FK_UsuarioPaquete" FromRole="Paquetes" ToRole="Usuarios" />
+          <NavigationProperty Name="Destinatario" Relationship="Self.FK_UsuarioPaquete1" FromRole="Paquetes" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="PuntoDeControl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Posicion" Type="Int32" Nullable="false" />
+          <Property Name="TiempoEstimado" Type="Int32" Nullable="false" />
+          <Property Name="IdAgencia" Type="Int32" />
+          <Property Name="IdTrayecto" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Agencia" Relationship="Self.FK_PuntoDeControlAgencia" FromRole="PuntosDeControl" ToRole="Agencias" />
+          <NavigationProperty Name="PaquetePuntoDeControl" Relationship="Self.FK_PuntoDeControlPaquetePuntoDeControl" FromRole="PuntosDeControl" ToRole="PaquetePuntoDeControlSet" />
+          <NavigationProperty Name="Trayecto" Relationship="Self.FK_TrayectoPuntoDeControl" FromRole="PuntosDeControl" ToRole="Trayectos" />
+        </EntityType>
+        <EntityType Name="Trayecto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idAgenciaOrigen" Type="Int32" Nullable="false" />
+          <Property Name="idAgenciaDestino" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Origen" Relationship="Self.FK_AgenciaTrayecto" FromRole="Trayectos" ToRole="Agencias" />
+          <NavigationProperty Name="Destino" Relationship="Self.FK_AgenciaTrayecto1" FromRole="Trayectos" ToRole="Agencias" />
+          <NavigationProperty Name="Paquetes" Relationship="Self.FK_PaqueteTrayecto" FromRole="Trayectos" ToRole="Paquetes" />
+          <NavigationProperty Name="PuntosDeControl" Relationship="Self.FK_TrayectoPuntoDeControl" FromRole="Trayectos" ToRole="PuntosDeControl" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pass" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rol" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TipoDocumento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NroDocumento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PaquetesEnviados" Relationship="Self.FK_UsuarioPaquete" FromRole="Usuarios" ToRole="Paquetes" />
+          <NavigationProperty Name="PaquetesRecibidos" Relationship="Self.FK_UsuarioPaquete1" FromRole="Usuarios" ToRole="Paquetes" />
+        </EntityType>
+        <Association Name="FK_AgenciaTrayecto">
+          <End Role="Agencias" Type="Model.Agencia" Multiplicity="1" />
+          <End Role="Trayectos" Type="Model.Trayecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trayectos">
+              <PropertyRef Name="idAgenciaOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AgenciaTrayecto1">
+          <End Role="Agencias" Type="Model.Agencia" Multiplicity="1" />
+          <End Role="Trayectos" Type="Model.Trayecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Trayectos">
+              <PropertyRef Name="idAgenciaDestino" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PuntoDeControlAgencia">
+          <End Role="Agencias" Type="Model.Agencia" Multiplicity="0..1" />
+          <End Role="PuntosDeControl" Type="Model.PuntoDeControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PuntosDeControl">
+              <PropertyRef Name="IdAgencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaquetePaquetePuntoDeControl">
+          <End Role="Paquetes" Type="Model.Paquete" Multiplicity="1" />
+          <End Role="PaquetePuntoDeControlSet" Type="Model.PaquetePuntoDeControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paquetes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaquetePuntoDeControlSet">
+              <PropertyRef Name="IdPaquete" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PuntoDeControlPaquetePuntoDeControl">
+          <End Role="PuntosDeControl" Type="Model.PuntoDeControl" Multiplicity="1" />
+          <End Role="PaquetePuntoDeControlSet" Type="Model.PaquetePuntoDeControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuntosDeControl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaquetePuntoDeControlSet">
+              <PropertyRef Name="IdPuntoDeControl" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaqueteTrayecto">
+          <End Role="Trayectos" Type="Model.Trayecto" Multiplicity="1" />
+          <End Role="Paquetes" Type="Model.Paquete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trayectos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paquetes">
+              <PropertyRef Name="TrayectoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioPaquete">
+          <End Role="Usuarios" Type="Model.Usuario" Multiplicity="1" />
+          <End Role="Paquetes" Type="Model.Paquete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paquetes">
+              <PropertyRef Name="RemitenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioPaquete1">
+          <End Role="Usuarios" Type="Model.Usuario" Multiplicity="1" />
+          <End Role="Paquetes" Type="Model.Paquete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Paquetes">
+              <PropertyRef Name="DestinatarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrayectoPuntoDeControl">
+          <End Role="Trayectos" Type="Model.Trayecto" Multiplicity="1" />
+          <End Role="PuntosDeControl" Type="Model.PuntoDeControl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trayectos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PuntosDeControl">
+              <PropertyRef Name="IdTrayecto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TFEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Agencias" EntityType="Model.Agencia" />
+          <EntitySet Name="PaquetePuntoDeControlSet" EntityType="Model.PaquetePuntoDeControl" />
+          <EntitySet Name="Paquetes" EntityType="Model.Paquete" />
+          <EntitySet Name="PuntosDeControl" EntityType="Model.PuntoDeControl" />
+          <EntitySet Name="Trayectos" EntityType="Model.Trayecto" />
+          <EntitySet Name="Usuarios" EntityType="Model.Usuario" />
+          <AssociationSet Name="FK_AgenciaTrayecto" Association="Self.FK_AgenciaTrayecto">
+            <End Role="Agencias" EntitySet="Agencias" />
+            <End Role="Trayectos" EntitySet="Trayectos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AgenciaTrayecto1" Association="Self.FK_AgenciaTrayecto1">
+            <End Role="Agencias" EntitySet="Agencias" />
+            <End Role="Trayectos" EntitySet="Trayectos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PuntoDeControlAgencia" Association="Self.FK_PuntoDeControlAgencia">
+            <End Role="Agencias" EntitySet="Agencias" />
+            <End Role="PuntosDeControl" EntitySet="PuntosDeControl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaquetePaquetePuntoDeControl" Association="Self.FK_PaquetePaquetePuntoDeControl">
+            <End Role="Paquetes" EntitySet="Paquetes" />
+            <End Role="PaquetePuntoDeControlSet" EntitySet="PaquetePuntoDeControlSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PuntoDeControlPaquetePuntoDeControl" Association="Self.FK_PuntoDeControlPaquetePuntoDeControl">
+            <End Role="PuntosDeControl" EntitySet="PuntosDeControl" />
+            <End Role="PaquetePuntoDeControlSet" EntitySet="PaquetePuntoDeControlSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaqueteTrayecto" Association="Self.FK_PaqueteTrayecto">
+            <End Role="Trayectos" EntitySet="Trayectos" />
+            <End Role="Paquetes" EntitySet="Paquetes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioPaquete" Association="Self.FK_UsuarioPaquete">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Paquetes" EntitySet="Paquetes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioPaquete1" Association="Self.FK_UsuarioPaquete1">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Paquetes" EntitySet="Paquetes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrayectoPuntoDeControl" Association="Self.FK_TrayectoPuntoDeControl">
+            <End Role="Trayectos" EntitySet="Trayectos" />
+            <End Role="PuntosDeControl" EntitySet="PuntosDeControl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="TFEntities">
+          <EntitySetMapping Name="Agencias">
+            <EntityTypeMapping TypeName="Model.Agencia">
+              <MappingFragment StoreEntitySet="Agencias">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="EntregaDomicilio" ColumnName="EntregaDomicilio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaquetePuntoDeControlSet">
+            <EntityTypeMapping TypeName="Model.PaquetePuntoDeControl">
+              <MappingFragment StoreEntitySet="PaquetePuntoDeControlSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FechaLlegada" ColumnName="FechaLlegada" />
+                <ScalarProperty Name="IdPaquete" ColumnName="IdPaquete" />
+                <ScalarProperty Name="IdPuntoDeControl" ColumnName="IdPuntoDeControl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Paquetes">
+            <EntityTypeMapping TypeName="Model.Paquete">
+              <MappingFragment StoreEntitySet="Paquetes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="TrayectoId" ColumnName="TrayectoId" />
+                <ScalarProperty Name="RemitenteId" ColumnName="RemitenteId" />
+                <ScalarProperty Name="DestinatarioId" ColumnName="DestinatarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PuntosDeControl">
+            <EntityTypeMapping TypeName="Model.PuntoDeControl">
+              <MappingFragment StoreEntitySet="PuntosDeControl">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Posicion" ColumnName="Posicion" />
+                <ScalarProperty Name="TiempoEstimado" ColumnName="TiempoEstimado" />
+                <ScalarProperty Name="IdAgencia" ColumnName="IdAgencia" />
+                <ScalarProperty Name="IdTrayecto" ColumnName="IdTrayecto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trayectos">
+            <EntityTypeMapping TypeName="Model.Trayecto">
+              <MappingFragment StoreEntitySet="Trayectos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="idAgenciaOrigen" ColumnName="idAgenciaOrigen" />
+                <ScalarProperty Name="idAgenciaDestino" ColumnName="idAgenciaDestino" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="Model.Usuario">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+                <ScalarProperty Name="NroDocumento" ColumnName="NroDocumento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,30 @@
+﻿@model MVC.Models.Entities.TrayectoModel
+
+@{
+    ViewBag.Title = "Trayecto";
+}
+
+<h2>Eliminar trayecto</h2>
+
+<h3>Estas seguro de que deseas eliminar este trayecto?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Confirmar" class="btn btn-default" /> |
+            @Html.ActionLink("Volver", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Reportes Gráficos";
+}
+
+<html>
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Estado', 'Cantidad de Paquetes'],
+                ['Recibido en origen',     @ViewBag.RecibidoEnOrigen],
+                ['Esperando en origen',      @ViewBag.EsperandoEnOrigen],
+                ['En viaje',  @ViewBag.EnViaje],
+                ['Recibido en Destino', @ViewBag.RecibidoEnDestino],
+                ['Entregado al Cliente',    @ViewBag.EntregadoAlCliente]
+            ]);
+
+            var options = {
+                title: 'Estados de paquetes'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('chart_paquetes'));
+
+            chart.draw(data, options);
+            }
+
+            google.charts.load('current', {'packages':['bar']});
+            google.charts.setOnLoadCallback(drawChart2);
+
+            function drawChart2() {
+                var data2 = google.visualization.arrayToDataTable([
+                    ['Rol', 'Cantidad', { role: 'style' } ],
+                    ['Administrador', @ViewBag.Administradores, 'color: gray'],
+                    ['Funcionario', @ViewBag.Funcionarios, 'color: red'],
+                    ['Cliente', @ViewBag.Clientes, 'color: blue']
+                ]);
+
+                var options2 = {
+                    chart: {
+                         title: 'Usuarios por Rol'
+                    }
+                };
+            
+                var chart2 = new google.charts.Bar(document.getElementById('chart_usuarios'));
+
+                chart2.draw(data2, google.charts.Bar.convertOptions(options2));
+            }
+
+        </script>
+    </head>
+    <body>
+        <div id="chart_paquetes" style="width: 450px; height: 250px;"></div>
+        <div id="chart_usuarios" style="width: 400px; height: 250px;"></div>
+    </body>
+</html>

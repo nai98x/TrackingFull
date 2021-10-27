@@ -1,0 +1,39 @@
+﻿@model MVC.Models.Entities.PuntoDeControlModel
+
+@{
+    ViewBag.Title = "Punto de Control";
+}
+
+<h2>Eliminar punto de control</h2>
+
+<h3>Esta seguro de que deseas eliminar este punto de control?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Posicion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Posicion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Confirmar" class="btn btn-default" /> |
+            @Html.ActionLink("Volver", "Index", "PuntoDeControl", new { id = ViewBag.IdTrayecto }, null)
+        </div>
+    }
+</div>
